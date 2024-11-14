@@ -14,9 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true); 
 
     // Validate required fields
-    if (empty($data)) {
-        sendResponse(400, 'Username, email, and password are required.');
-    }
+    validateRequiredFields($data, ['username', 'email', 'password']);
 
     $username = $data['username'];
     $email = $data['email'];

@@ -27,5 +27,13 @@ function sendResponse($statusCode, $message) {
     exit;
 }
 
+// validate Required Fields Function
+function validateRequiredFields($data, $requiredFields) {
+    foreach ($requiredFields as $field) {
+        if (empty($data[$field])) {
+            sendResponse(400, "$field is required.");
+        }
+    }
+}
 
 ?>
