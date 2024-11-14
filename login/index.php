@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     validateRequiredFields($data, ['email', 'password']);
 
-    $email = $data['email'];
+    $email = strtolower($data['email']);
     $password = $data['password'];
 
     $user = $usersCollection->findOne(['email' => $email]);

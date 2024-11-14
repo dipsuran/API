@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     }
 
     if (!empty($data['email'])) {
-        $email = $data['email'];
+        $email = strtolower($data['email']);
         if ($usersCollection->findOne(['email' => $email, '_id' => ['$ne' => new MongoDB\BSON\ObjectId($userId)]])) {
             sendResponse(409, 'Email already exists.');
         }

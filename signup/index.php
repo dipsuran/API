@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     validateRequiredFields($data, ['username', 'email', 'password']);
 
     $username = $data['username'];
-    $email = $data['email'];
+    $email = strtolower($data['email']);
     $password = $data['password'];
     $roles = isset($data['roles']) ? $data['roles'] : ['user']; 
 
