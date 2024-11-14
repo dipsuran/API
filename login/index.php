@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!password_verify($password, $user['password'])) {
-        sendResponse(401, 'Invalid email or password.'); 
+        sendResponse(401, 'Invalid Password.'); 
     }
 
     if ($user['status'] == 0) {
