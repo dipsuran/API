@@ -11,9 +11,7 @@ $usersCollection = $db->users;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true); 
 
-    if (empty($data['email']) || empty($data['password'])) {
-        sendResponse(400, 'email and password are required.');
-    }
+    validateRequiredFields($data, ['email', 'password']);
 
     $email = $data['email'];
     $password = $data['password'];

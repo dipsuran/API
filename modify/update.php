@@ -14,10 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (empty($data['_id']) || empty($data['username']) || empty($data['email']) || empty($data['password'])) {
-        sendResponse(400, 'Id, Username, email, and password are required.');
-    }
-    
+    validateRequiredFields($data, ['_id','username', 'email', 'password']);
+
     $userId = $data['_id'];
     
     $updateFields = [];
