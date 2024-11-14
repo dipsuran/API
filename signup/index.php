@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // }
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-    
+    $status = 0;
     $user = [
         'username' => $username,
         'email' => $email,
         'password' => $hashedPassword,
-        'status' => 0,
+        'status' => $status,
         'roles' => []
     ];
 
