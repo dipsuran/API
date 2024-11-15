@@ -15,17 +15,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $data = json_decode(file_get_contents('php://input'), true);
 
     validateRequiredFields($data, ['_id','username', 'email', 'password']);
-
+    
     $userId = $data['_id'];
     
     $updateFields = [];
     if (!empty($data['username'])) {
         $username = $data['username'];
+        if ($usersCollection->findOne(['username' => $username,  '_id' => ['$ne' => new MongoDB\BSON\ObjectId($userId)]])) {
+            sendResponse(409, 'Username already exists.');
+        }
         $updateFields['username'] = $username;
     }
 
     if (!empty($data['email'])) {
         $email = strtolower($data['email']);
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            sendResponse(400, 'Invalid email format.');
+        }
         if ($usersCollection->findOne(['email' => $email, '_id' => ['$ne' => new MongoDB\BSON\ObjectId($userId)]])) {
             sendResponse(409, 'Email already exists.');
         }

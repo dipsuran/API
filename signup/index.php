@@ -10,7 +10,7 @@ $rolesCollection = $db->roles;
 $usersCollection = $db->users;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+
     $data = json_decode(file_get_contents('php://input'), true); 
 
     // Validate required fields
@@ -22,13 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $roles = isset($data['roles']) ? $data['roles'] : ['user']; 
 
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        sendResponse(400, 'Invalid email format.');
+    }
     
     if ($usersCollection->findOne(['email' => $email])) {
         sendResponse(409, 'Email already exists.');
     }
-    // if ($usersCollection->findOne(['username' => $username])) {
-    //     sendResponse(409, 'Username already exists.');
-    // }
+    if ($usersCollection->findOne(['username' => $username])) {
+        sendResponse(409, 'Username already exists.');
+    }
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $status = 0;

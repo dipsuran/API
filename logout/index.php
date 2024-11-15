@@ -14,7 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     validateRequiredFields($data, ['email']);
 
     $email = strtolower($data['email']);
-
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        sendResponse(400, 'Invalid email format.');
+    }
     $user = $usersCollection->findOne(['email' => $email]);
 
     if (!$user) {

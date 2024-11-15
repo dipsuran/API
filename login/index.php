@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $email = strtolower($data['email']);
     $password = $data['password'];
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        sendResponse(400, 'Invalid email format.');
+    }
 
     $user = $usersCollection->findOne(['email' => $email]);
 
