@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     
     $data = json_decode(file_get_contents('php://input'), true);
 
-    validateRequiredFields($data, ['_id','username', 'email', 'password']);
+    validateRequiredFields($data, ['_id','username', 'email', 'password','confirm_password']);
     
     $userId = $data['_id'];
     
